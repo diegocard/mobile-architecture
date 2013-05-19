@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <artifactId>HomeBanking</artifactId>
-    <groupId>org.fing.tagsi.grupo8</groupId>
+    <groupId>org.fing.tagsi.grupo8.homebanking</groupId>
     <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.fing.tagsi.grupo8</groupId>
+  <groupId>org.fing.tagsi.grupo8.homebanking</groupId>
   <artifactId>HomeBanking-ear</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>ear</packaging>
@@ -43,13 +43,13 @@
   </build>
     <dependencies>
         <dependency>
-            <groupId>org.fing.tagsi.grupo8</groupId>
+            <groupId>org.fing.tagsi.grupo8.homebanking</groupId>
             <artifactId>HomeBanking-ejb</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>ejb</type>
         </dependency>
         <dependency>
-            <groupId>org.fing.tagsi.grupo8</groupId>
+            <groupId>org.fing.tagsi.grupo8.homebanking</groupId>
             <artifactId>HomeBanking-web</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>war</type>
