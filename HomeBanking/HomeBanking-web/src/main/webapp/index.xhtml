@@ -7,10 +7,11 @@
     <h:body>
         <ui:composition template="/templates/layout.xhtml">
             <ui:define name="header">
-                Index Header
+                <h1>Index</h1>
             </ui:define>
             <ui:define name="content">
-                Index Content
+                <h:link value="Agregar Sucursal" outcome="sucursales/add"/>
+                <h:link value="Ver Sucursales" outcome="sucursales/list"/>
             </ui:define>
         </ui:composition>
     </h:body>
