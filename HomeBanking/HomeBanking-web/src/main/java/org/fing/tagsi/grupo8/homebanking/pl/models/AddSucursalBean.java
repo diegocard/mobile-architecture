@@ -5,13 +5,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import org.fing.tagsi.grupo8.homebanking.common.entities.Sucursal;
+import org.fing.tagsi.grupo8.homebanking.pl.serviceagent.SucursalesSA;
 
 @ManagedBean
 @RequestScoped
 public class AddSucursalBean {
-    @EJB
-    private org.fing.tagsi.grupo8.homebanking.bll.Sucursales sucursales;
-    
     private Sucursal sucursal = new Sucursal();
     
     public Sucursal getSucursal(){
@@ -25,7 +23,7 @@ public class AddSucursalBean {
     public AddSucursalBean(){}
     
     public String add(){
-        sucursales.addSucursal(sucursal);
+        SucursalesSA.getSucursales().addSucursal(sucursal);
         return "/index.xhtml";
     }
 }

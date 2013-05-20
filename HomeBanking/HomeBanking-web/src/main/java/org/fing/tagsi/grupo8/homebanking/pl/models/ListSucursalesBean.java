@@ -8,13 +8,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import org.fing.tagsi.grupo8.homebanking.common.entities.Sucursal;
+import org.fing.tagsi.grupo8.homebanking.pl.serviceagent.SucursalesSA;
 
 @ManagedBean
 @RequestScoped
 public class ListSucursalesBean {
-//    @EJB
-//    private org.fing.tagsi.grupo8.homebanking.bll.Sucursales sucursales;
-    
     public List<Sucursal> sucursalesList = new ArrayList<Sucursal>();
     
     public List<Sucursal> getSucursalesList(){
@@ -27,6 +25,6 @@ public class ListSucursalesBean {
     
     @PostConstruct
     public void init(){
-//        sucursalesList = sucursales.getAllSucursales();
+        sucursalesList = SucursalesSA.getSucursales().getAllSucursales();
     }
 }

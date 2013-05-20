@@ -7,10 +7,10 @@
     <h:body>
         <ui:composition template="/templates/layout.xhtml">
             <ui:define name="header">
-                Sucursales
+                <h1>Sucursales</h1>
             </ui:define>
             <ui:define name="content">
-                <h:dataTable value="#{listSucursalesBean.sucursales}" var="sucursal">
+                <h:dataTable value="#{listSucursalesBean.sucursalesList}" var="sucursal">
                     <h:column>
                         <f:facet name="header">Id</f:facet>
                         #{sucursal.id}

@@ -1,5 +1,7 @@
 package org.fing.tagsi.grupo8.homebanking.bll;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -31,7 +33,8 @@ public class Sucursales {
         CriteriaQuery<Sucursal> query = builder.createQuery(Sucursal.class);
         Root<Sucursal> root = query.from(Sucursal.class);
         query.select(root);
-        return em.createQuery(query).getResultList();
+        List<Sucursal> sucursales = em.createQuery(query).getResultList();
+        return sucursales;
     }
     
     public Sucursal updateSucursal(Sucursal sucursal){

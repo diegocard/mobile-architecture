@@ -20,10 +20,10 @@ public class Sucursal implements Serializable {
     private String direccion;
     private double x;
     private double y;
-    @Temporal(TemporalType.TIME)
-    private Date horarioInicio;
-    @Temporal(TemporalType.TIME)
-    private Date horarioFin;
+//    @Temporal(TemporalType.TIME)
+//    private Date horarioInicio;
+//    @Temporal(TemporalType.TIME)
+//    private Date horarioFin;
     
     public Long getId() {
         return id;
@@ -65,19 +65,19 @@ public class Sucursal implements Serializable {
         this.y = y;
     }
 
-    public Date getHorarioInicio() {
-        return horarioInicio;
-    }
-
-    public void setHorarioInicio(Date horarioInicio) {
-        this.horarioInicio = horarioInicio;
-    }
-
-    public Date getHorarioFin() {
-        return horarioFin;
-    }
-
-    public void setHorarioFin(Date horarioFin) {
-        this.horarioFin = horarioFin;
-    }
+//    public Date getHorarioInicio() {
+//        return horarioInicio;
+//    }
+//
+//    public void setHorarioInicio(Date horarioInicio) {
+//        this.horarioInicio = horarioInicio;
+//    }
+//
+//    public Date getHorarioFin() {
+//        return horarioFin;
+//    }
+//
+//    public void setHorarioFin(Date horarioFin) {
+//        this.horarioFin = horarioFin;
+//    }
 }

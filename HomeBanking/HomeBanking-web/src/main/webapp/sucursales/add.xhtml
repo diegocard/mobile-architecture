@@ -24,12 +24,6 @@
                         <h:outputLabel for="y">Y:</h:outputLabel>
                         <h:inputText id="y" value="#{addSucursalBean.sucursal.y}" />
                         
-                        <h:outputLabel for="horarioInicio">Horario inicio:</h:outputLabel>
-                        <h:inputText id="horarioInicio" value="#{addSucursalBean.sucursal.horarioInicio}" />
-                        
-                        <h:outputLabel for="horarioFin">Horario fin:</h:outputLabel>
-                        <h:inputText id="horarioFin" value="#{addSucursalBean.sucursal.horarioFin}" />
-                        
                     </h:panelGrid>
                     <h:commandButton action="#{addSucursalBean.add()}" type="submit" value="Crear Sucursal"/>
                 </h:form>
