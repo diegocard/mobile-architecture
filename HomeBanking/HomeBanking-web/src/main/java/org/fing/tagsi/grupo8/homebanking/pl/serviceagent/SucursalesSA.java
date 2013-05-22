@@ -1,9 +1,8 @@
 package org.fing.tagsi.grupo8.homebanking.pl.serviceagent;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+
 import org.fing.tagsi.grupo8.homebanking.bll.Sucursales;
 
 public class SucursalesSA {

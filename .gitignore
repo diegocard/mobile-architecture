@@ -4,3 +4,9 @@
 *.jar
 *.war
 *.ear
+/HomeBankingServer/HomeBankingServer-ejb/target/
+/HomeBankingServer/HomeBankingServer-web/target/
+/HomeBankingServer/HomeBankingServer-ear/target/
+/HomeBanking/HomeBanking-ejb/target/
+/HomeBanking/HomeBanking-web/target/
+/HomeBanking/HomeBanking-ear/target/

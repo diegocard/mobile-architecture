@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:body>
+        <ui:composition template="/templates/layout.xhtml">
+            <ui:define name="header">
+                <h1>Agregar Usuario</h1>
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel for="nombre">Nombre:</h:outputLabel>
+                        <h:inputText id="nombre" value="#{addUsuarioBean.usuario.nombre}"
+                                     required="true" requiredMessage="Ingrese nombre"/>
+                        
+                        <h:outputLabel for="apellido">Apellido:</h:outputLabel>
+                        <h:inputText id="apellido" value="#{addUsuarioBean.usuario.apellido}" />
+                        
+                        <h:outputLabel for="usuario">Usuario:</h:outputLabel>
+                        <h:inputText id="usuario" value="#{addUsuarioBean.usuario.usuario}" />
+                        
+                        <h:outputLabel for="password">Password:</h:outputLabel>
+                        <h:inputText id="password" value="#{addUsuarioBean.usuario.password}" />
+                        
+                    </h:panelGrid>
+                    <h:commandButton action="#{addUsuarioBean.add()}" type="submit" value="Crear Usuario"/>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

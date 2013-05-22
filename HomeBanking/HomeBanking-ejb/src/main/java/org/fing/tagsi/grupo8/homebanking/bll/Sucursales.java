@@ -1,7 +1,5 @@
 package org.fing.tagsi.grupo8.homebanking.bll;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
