@@ -3,25 +3,25 @@ package org.fing.tagsi.grupo8.homebanking.pl.serviceagent;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.fing.tagsi.grupo8.homebanking.bll.Cuentas;
+import org.fing.tagsi.grupo8.homebanking.bll.CuentasEJB;
 
 public class CuentasSA {
-    private static final Cuentas cuentas;
+    private static final CuentasEJB cuentas;
     
     static {
         cuentas = lookupCuentasBean();
     }
     
-    private static Cuentas lookupCuentasBean() {
+    private static CuentasEJB lookupCuentasBean() {
         try {
             javax.naming.Context c = new InitialContext();
-            return (Cuentas) c.lookup("java:global/HomeBanking-ear-1.0-SNAPSHOT/HomeBanking-ejb-1.0-SNAPSHOT/Cuentas!org.fing.tagsi.grupo8.homebanking.bll.Cuentas");
+            return (CuentasEJB) c.lookup("java:global/HomeBanking-ear-1.0-SNAPSHOT/HomeBanking-ejb-1.0-SNAPSHOT/CuentasEJB!org.fing.tagsi.grupo8.homebanking.bll.CuentasEJB");
         } catch (NamingException ne) {
             throw new RuntimeException(ne);
         }
     }
     
-    public static Cuentas getCuentas(){
+    public static CuentasEJB getCuentas(){
         return cuentas;
     }
     
