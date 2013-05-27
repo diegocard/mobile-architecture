@@ -24,6 +24,6 @@ public class AddSucursalBean {
     
     public String add(){
         SucursalesSA.getSucursales().addSucursal(sucursal);
-        return "/index.xhtml";
+        return "/sucursales/listSucursales.xhtml?faces-redirect=true";
     }
 }

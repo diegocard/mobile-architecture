@@ -10,20 +10,30 @@
                 <h1>Sucursales</h1>
             </ui:define>
             <ui:define name="content">
-                <h:dataTable value="#{listSucursalesBean.sucursalesList}" var="sucursal">
-                    <h:column>
-                        <f:facet name="header">Id</f:facet>
-                        #{sucursal.id}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Nombre</f:facet>
-                        #{sucursal.nombre}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Direccion</f:facet>
-                        #{sucursal.direccion}
-                    </h:column>
-                </h:dataTable>
+                <h:button value="Crear Sucursal" outcome="addSucursal" />
+                <h:form>
+                    <h:dataTable id="sucursales" value="#{listSucursalesBean.sucursalesList}" var="sucursal">
+                        <h:column>
+                            <f:facet name="header">Id</f:facet>
+                            #{sucursal.id}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Nombre</f:facet>
+                            #{sucursal.nombre}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Accion</f:facet>
+                            <h:outputLink value="editSucursal.xhtml">
+                                Editar
+                                <f:param name="idSucursal" value="#{sucursal.id}"/>
+                            </h:outputLink>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Accion</f:facet>
+                            <h:commandLink action="#{deleteSucursalBean.delete(sucursal.id)}" value="Eliminar" />
+                        </h:column>
+                    </h:dataTable>
+                </h:form>
             </ui:define>
         </ui:composition>
     </h:body>
