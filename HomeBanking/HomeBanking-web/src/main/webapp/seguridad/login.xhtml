@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:body>
+        <ui:composition template="/templates/layout.xhtml">
+            <ui:define name="header">
+                <h1>SignIn</h1>
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <h:outputLabel for="usuario">Usuario:</h:outputLabel>
+                    <h:inputText id="usuario" value="#{loginUsuarioBean.usuario}"
+                                 required="true" requiredMessage="Ingrese usuario"/>
+
+                    <h:outputLabel for="password">Password:</h:outputLabel>
+                    <h:inputText id="password" value="#{loginUsuarioBean.password}"
+                                 required="true" requiredMessage="Ingrese password"/>
+
+                    <h:commandButton value="SignIn" action="#{loginUsuarioBean.login}"/>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
