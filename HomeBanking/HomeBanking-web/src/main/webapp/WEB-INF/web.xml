@@ -13,7 +13,6 @@
         <servlet-name>ServletAdaptor</servlet-name>
         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
         <init-param>
-            <description>Multiple packages, separated by semicolon(;), can be specified in param-value</description>
             <param-name>com.sun.jersey.config.property.packages</param-name>
             <param-value>org.fing.tagsi.grupo8.homebanking.sl.services</param-value>
         </init-param>

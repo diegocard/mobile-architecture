@@ -2,11 +2,11 @@ package org.fing.tagsi.grupo8.homebanking.pl.models.seguridad;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import org.fing.tagsi.grupo8.homebanking.pl.serviceagent.UsuariosSA;
 
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class LoginUsuarioBean {
 
     private String usuario;
@@ -42,11 +42,12 @@ public class LoginUsuarioBean {
     public LoginUsuarioBean() {}
     
     public String login(){
-        if (UsuariosSA.getUsuarios().validate(usuario, password)){
-            return "index.xhtml";
-        } else {
-            return "default.xhtml";
+        if (UsuariosSA.getUsuarios().validarUsuario(usuario, password)){
+            sessionBean.setNombre(usuario);
+            sessionBean.setLogueado(true);
         }
+        
+        return "../index.xhtml?faces-redirect=true";
     }
     
     public String logout(){

@@ -19,14 +19,10 @@ public class UsuariosEJB {
     @PersistenceContext(unitName = "HomeBankingPU")
     private EntityManager em;
     
-    //###### CRUD ########
+    // CRUD
     public Usuario addUsuario(Usuario usuario){
         em.persist(usuario);
         return usuario;
-    }
-    
-    public Usuario getUsuario(Long idUsuario){
-        return em.find(Usuario.class, idUsuario);
     }
     
     public List<Usuario> getAllUsuarios(){
@@ -38,7 +34,11 @@ public class UsuariosEJB {
         return usuarios;    
     }
     
-    public Usuario updateUsuario(Long idUsuario, Usuario usuario){
+    public Usuario getUsuario(Long idUsuario){
+        return em.find(Usuario.class, idUsuario);
+    }
+    
+    public Usuario updateUsuario(Usuario usuario){
         em.merge(usuario);
         return usuario;
     }
@@ -47,7 +47,8 @@ public class UsuariosEJB {
         em.remove(em.getReference(Usuario.class, idUsuario));
     }
     
-    public boolean validate(String usuario, String password){
+    // BLL
+    public boolean validarUsuario(String usuario, String password){
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Usuario> query = builder.createQuery(Usuario.class);
         Root<Usuario> usuarioRoot = query.from(Usuario.class);

@@ -22,7 +22,7 @@ public class AddCuentaBean {
     public AddCuentaBean(){}
     
     public String add(){
-        CuentasSA.getCuentas().addCuenta(cuenta.getUsuario().getId(), cuenta);
+        //CuentasSA.getCuentas().addCuenta(cuenta.getUsuario().getId(), cuenta);
         return "/index.xhtml";
     }
 }

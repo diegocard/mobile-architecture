@@ -8,11 +8,18 @@
         <ui:composition template="/templates/layout.xhtml">
             <ui:define name="header">
                 <h1>Index</h1>
-                <a href="faces/seguridad/login.xhtml" data-rel="dialog" data-transition="slidedown">Sign In</a>
+                <ui:fragment rendered="#{not sessionBean.logueado}">
+                    <a href="faces/seguridad/login.xhtml" data-rel="dialog" data-transition="slidedown" class="ui-btn-right"  data-icon="arrow-r">Sign In</a>
+                </ui:fragment>
             </ui:define>
             <ui:define name="content">
-                <h:link value="Administrar Sucursales" outcome="sucursales/listSucursales"/> <br/>
-                <h:link value="Administrar Usuarios" outcome="seguridad/listUsuarios"/> <br/>
+                <ui:fragment rendered="#{sessionBean.logueado}">
+                    <h:link value="Administrar Sucursales" outcome="sucursales/listSucursales"/> <br/>
+                    <h:link value="Administrar Usuarios" outcome="seguridad/listUsuarios"/> <br/>
+                </ui:fragment>
+                <ui:fragment rendered="#{not sessionBean.logueado}">
+                    <h3>Administrative app for Home Banking</h3>
+                </ui:fragment>
             </ui:define>
         </ui:composition>
     </h:body>

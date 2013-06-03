@@ -1,6 +1,5 @@
 package org.fing.tagsi.grupo8.homebanking.pl.models.sucursales;
 
-import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
