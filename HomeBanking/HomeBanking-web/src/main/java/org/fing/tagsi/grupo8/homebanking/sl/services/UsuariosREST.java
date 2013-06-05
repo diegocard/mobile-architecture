@@ -1,5 +1,6 @@
 package org.fing.tagsi.grupo8.homebanking.sl.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -15,6 +16,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.fing.tagsi.grupo8.homebanking.bll.UsuariosEJB;
+import org.fing.tagsi.grupo8.homebanking.common.entities.Cuenta;
 import org.fing.tagsi.grupo8.homebanking.common.entities.Usuario;
 
 @Path("usuarios")
@@ -23,27 +25,39 @@ public class UsuariosREST {
     private UsuariosEJB usuariosEJB = lookupUsuariosBean();
     
     @PUT
-    @Consumes(MediaType.APPLICATION_XML)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Usuario addUsuario(Usuario usuario){
         return usuariosEJB.addUsuario(usuario);
     }
     
     @GET
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_JSON)
     public List<Usuario> getAllUsuarios()
     {
-        return usuariosEJB.getAllUsuarios();
+        List<Usuario> usuarios = usuariosEJB.getAllUsuarios();
+        
+        for (Usuario u: usuarios){
+            u.setCuentas(new ArrayList<Cuenta>());
+        }
+        
+        return usuarios;
     }
     
     @GET
     @Path("{idUsuario}")
-    @Produces(MediaType.APPLICATION_XML)
-    public Usuario getUsuario(Long idUsuario){
-        return usuariosEJB.getUsuario(idUsuario);
+    @Produces(MediaType.APPLICATION_JSON)
+    public Usuario getUsuario(@PathParam("idUsuario") Long idUsuario){
+        Usuario usuario = usuariosEJB.getUsuario(idUsuario);
+        
+        usuario.setCuentas(new ArrayList<Cuenta>());
+        
+        return usuario;
     }
     
     @POST
-    @Consumes(MediaType.APPLICATION_XML)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Usuario updateUsuario(Usuario usuario){
         return usuariosEJB.updateUsuario(usuario);
     }

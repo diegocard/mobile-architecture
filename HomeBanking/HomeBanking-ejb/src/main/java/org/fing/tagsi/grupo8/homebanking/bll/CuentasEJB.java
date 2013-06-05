@@ -34,11 +34,8 @@ public class CuentasEJB {
     }
     
     public List<Cuenta> getAllCuentas(Long idUsuario){
-        String sql =
-            "select c from cuenta as c "+
-            "where exists (select * from usuario_cuenta as uc where uc.usuario_id = :usuarioid "+
-                "and c.id = uc.cuentas_id)";
-        
+        String sql = "select c from Cuenta as c where c.usuario.id = :usuarioID";
+            
         TypedQuery<Cuenta> q = em.createQuery(sql, Cuenta.class).setParameter("usuarioID", idUsuario);
         
         return q.getResultList();

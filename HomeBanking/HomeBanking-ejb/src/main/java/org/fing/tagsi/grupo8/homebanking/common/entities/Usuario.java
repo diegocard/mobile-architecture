@@ -1,7 +1,5 @@
 package org.fing.tagsi.grupo8.homebanking.common.entities;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -15,7 +13,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @XmlRootElement
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     
@@ -28,7 +25,8 @@ public class Usuario implements Serializable {
     private String usuario;
     private String password;
     
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
+        orphanRemoval = true, mappedBy = "usuario", targetEntity = Cuenta.class)
     private List<Cuenta> cuentas;
     
     public Long getId(){

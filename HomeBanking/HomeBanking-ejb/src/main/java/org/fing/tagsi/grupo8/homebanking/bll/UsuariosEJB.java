@@ -26,11 +26,12 @@ public class UsuariosEJB {
     }
     
     public List<Usuario> getAllUsuarios(){
-        CriteriaBuilder builder = em.getCriteriaBuilder();
+        /*CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Usuario> query = builder.createQuery(Usuario.class);
         Root<Usuario> usuarioRoot = query.from(Usuario.class);
         query.select(usuarioRoot);
-        List<Usuario> usuarios = em.createQuery(query).getResultList();
+        List<Usuario> usuarios = em.createQuery(query).getResultList();*/
+        List<Usuario> usuarios = em.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList();
         return usuarios;    
     }
     

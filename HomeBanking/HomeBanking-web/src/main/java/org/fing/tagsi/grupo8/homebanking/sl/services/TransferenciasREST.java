@@ -1,5 +1,6 @@
 package org.fing.tagsi.grupo8.homebanking.sl.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -13,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.fing.tagsi.grupo8.homebanking.common.entities.Transferencia;
 import org.fing.tagsi.grupo8.homebanking.bll.TransferenciasEJB;
+import org.fing.tagsi.grupo8.homebanking.common.entities.Cuenta;
 
 @Path("transferencias")
 public class TransferenciasREST {
@@ -22,50 +24,89 @@ public class TransferenciasREST {
     public TransferenciasREST() {}
     
     @GET
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_JSON)
     public List<Transferencia> getAllTransferencias(){
-        return transferenciasEJB.getAllTransferencias();
+        List<Transferencia> transferencias = transferenciasEJB.getAllTransferencias();
+        
+        for (Transferencia transferencia: transferencias){
+            transferencia.getCuentaOrigen().getUsuario().setCuentas(new ArrayList<Cuenta>());
+            transferencia.getCuentaDestino().getUsuario().setCuentas(new ArrayList<Cuenta>());
+            
+            transferencia.getCuentaOrigen().setTransferenciasOrigen(new ArrayList<Transferencia>());
+            transferencia.getCuentaOrigen().setTransferenciasDestino(new ArrayList<Transferencia>());
+            transferencia.getCuentaDestino().setTransferenciasOrigen(new ArrayList<Transferencia>());
+            transferencia.getCuentaDestino().setTransferenciasDestino(new ArrayList<Transferencia>());
+        }
+        
+        return transferencias;
     }
     
     @GET
-    @Path("?usuario={idUsuario}")
-    @Produces(MediaType.APPLICATION_XML)
+    @Path("/usuario/{idUsuario}")
+    @Produces(MediaType.APPLICATION_JSON)
     public List<Transferencia> getAllTransferencias(
             @PathParam("idUsuario") Long idUsuario){
         
-        return transferenciasEJB.getAllTransferencias(idUsuario);
+        List<Transferencia> transferencias = transferenciasEJB.getAllTransferencias(idUsuario);
+        
+        for (Transferencia transferencia: transferencias){
+            transferencia.getCuentaOrigen().getUsuario().setCuentas(new ArrayList<Cuenta>());
+            transferencia.getCuentaDestino().getUsuario().setCuentas(new ArrayList<Cuenta>());
+            
+            transferencia.getCuentaOrigen().setTransferenciasOrigen(new ArrayList<Transferencia>());
+            transferencia.getCuentaOrigen().setTransferenciasDestino(new ArrayList<Transferencia>());
+            transferencia.getCuentaDestino().setTransferenciasOrigen(new ArrayList<Transferencia>());
+            transferencia.getCuentaDestino().setTransferenciasDestino(new ArrayList<Transferencia>());
+        }
+        
+        return transferencias;
     }
     
     @GET
     @Path("?usuario={idUsuario}&cuenta={idCuenta}")
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_JSON)
     public List<Transferencia> getAllTransferencias(
             @PathParam("idUsuario") Long idUsuario,
             @PathParam("idCuenta") Long idCuenta){
         
-        return transferenciasEJB.getAllTransferencias(idUsuario, idCuenta);
+        List<Transferencia> transferencias = transferenciasEJB.getAllTransferencias(idUsuario, idCuenta);
+        
+        for (Transferencia transferencia: transferencias){
+            transferencia.getCuentaOrigen().getUsuario().setCuentas(new ArrayList<Cuenta>());
+            transferencia.getCuentaDestino().getUsuario().setCuentas(new ArrayList<Cuenta>());
+            
+            transferencia.getCuentaOrigen().setTransferenciasOrigen(new ArrayList<Transferencia>());
+            transferencia.getCuentaOrigen().setTransferenciasDestino(new ArrayList<Transferencia>());
+            transferencia.getCuentaDestino().setTransferenciasOrigen(new ArrayList<Transferencia>());
+            transferencia.getCuentaDestino().setTransferenciasDestino(new ArrayList<Transferencia>());
+        }
+        
+        return transferencias;
     }
     
     @GET
     @Path("/{idTransferencia}")
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_JSON)
     public Transferencia getTransferencia(
             @PathParam("idTransferencia") Long idTransferencia){
         
-        Transferencia t = null;
+        Transferencia transferencia = transferenciasEJB.getTransferencia(idTransferencia);
         
-        try{
-            t = transferenciasEJB.getTransferencia(idTransferencia);
-        }
-        catch (Exception e){
-            
-        }
+        transferencia.getCuentaOrigen().getUsuario().setCuentas(new ArrayList<Cuenta>());
+        transferencia.getCuentaDestino().getUsuario().setCuentas(new ArrayList<Cuenta>());
+
+        transferencia.getCuentaOrigen().setTransferenciasOrigen(new ArrayList<Transferencia>());
+        transferencia.getCuentaOrigen().setTransferenciasDestino(new ArrayList<Transferencia>());
+        transferencia.getCuentaDestino().setTransferenciasOrigen(new ArrayList<Transferencia>());
+        transferencia.getCuentaDestino().setTransferenciasDestino(new ArrayList<Transferencia>());
         
-        return t;
+        return transferencia;
     }
     
     @PUT
-    @Consumes(MediaType.APPLICATION_XML)
+    @Path("/realizarTransferencia")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Transferencia realizarTransferencia(
             Long idUsuarioOrigen,
             Long idCuentaOrigen,
@@ -74,11 +115,11 @@ public class TransferenciasREST {
             long monto,
             String descripcion){
     
-        Transferencia t = null;
+        Transferencia transferencia = null;
         
         try
         {
-            t = transferenciasEJB.realizarTransferencia(idUsuarioOrigen,
+            transferencia = transferenciasEJB.realizarTransferencia(idUsuarioOrigen,
                 idUsuarioDestino, idCuentaOrigen, idCuentaDestino,
                     monto, descripcion);
         }
@@ -86,7 +127,7 @@ public class TransferenciasREST {
         
         }
         
-        return t;
+        return transferencia;
     }
     
     

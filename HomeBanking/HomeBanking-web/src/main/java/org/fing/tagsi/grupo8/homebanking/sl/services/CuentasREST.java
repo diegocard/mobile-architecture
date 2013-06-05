@@ -1,5 +1,6 @@
 package org.fing.tagsi.grupo8.homebanking.sl.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -15,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.fing.tagsi.grupo8.homebanking.bll.CuentasEJB;
 import org.fing.tagsi.grupo8.homebanking.common.entities.Cuenta;
+import org.fing.tagsi.grupo8.homebanking.common.entities.Transferencia;
 
 @Path("cuentas")
 public class CuentasREST {
@@ -24,38 +26,62 @@ public class CuentasREST {
     public CuentasREST() {}
     
     @PUT
-    @Consumes(MediaType.APPLICATION_XML)
-    @Produces(MediaType.APPLICATION_XML)
-    public Cuenta addCuenta(Long idUsuario, Cuenta cuenta){
-        return cuentasEJB.addCuenta(idUsuario, cuenta);
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Cuenta addCuenta(Cuenta cuenta){
+        return cuentasEJB.addCuenta(cuenta.getUsuario().getId(), cuenta);
     }
     
     @GET
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_JSON)
     public List<Cuenta> getAllCuentas(){
-        return cuentasEJB.getAllCuentas();
+        List<Cuenta> cuentas = cuentasEJB.getAllCuentas();
+        
+        for (Cuenta cuenta: cuentas){
+            cuenta.getUsuario().setCuentas(new ArrayList<Cuenta>());
+            cuenta.setTransferenciasOrigen(new ArrayList<Transferencia>());
+            cuenta.setTransferenciasDestino(new ArrayList<Transferencia>());
+        }
+        
+        return cuentas;
     }
     
     @GET
-    @Path("?usuario={idUsuario}")
-    @Produces(MediaType.APPLICATION_XML)
+    @Path("/usuario/{idUsuario}")
+    @Produces(MediaType.APPLICATION_JSON)
     public List<Cuenta> getAllCuentas(
             @PathParam("idUsuario") Long idUsuario){
         
-        return cuentasEJB.getAllCuentas(idUsuario);
+        List<Cuenta> cuentas = cuentasEJB.getAllCuentas(idUsuario);
+        
+        for (Cuenta cuenta: cuentas){
+            cuenta.getUsuario().setCuentas(new ArrayList<Cuenta>());
+            cuenta.setTransferenciasOrigen(new ArrayList<Transferencia>());
+            cuenta.setTransferenciasDestino(new ArrayList<Transferencia>());
+        }
+        
+        return cuentas;
     }
     
     @GET
     @Path("{idCuenta}")
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_JSON)
     public Cuenta getCuenta(
             @PathParam("idCuenta") Long idCuenta){
         
-        return cuentasEJB.getCuenta(idCuenta);
+        Cuenta cuenta = cuentasEJB.getCuenta(idCuenta);
+        
+        cuenta.getUsuario().setCuentas(new ArrayList<Cuenta>());
+        cuenta.setTransferenciasOrigen(new ArrayList<Transferencia>());
+        cuenta.setTransferenciasDestino(new ArrayList<Transferencia>());
+        
+        return cuenta;
+        
     }
     
     @POST
-    @Consumes(MediaType.APPLICATION_XML)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Cuenta updateCuenta(Cuenta cuenta){
         return cuentasEJB.updateCuenta(cuenta);
     }

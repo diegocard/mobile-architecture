@@ -1,6 +1,5 @@
 package org.fing.tagsi.grupo8.homebanking.sl.services;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -24,20 +23,20 @@ public class SucursalesREST {
     public SucursalesREST() {}
 
     @PUT
-    @Consumes(MediaType.APPLICATION_XML)
+    @Consumes(MediaType.APPLICATION_JSON)
     public void addSucursal(Sucursal sucursal) {
         sucursalesEJB.addSucursal(sucursal);
     }
     
     @GET
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_JSON)
     public List<Sucursal> getSucursales() {
         return sucursalesEJB.getAllSucursales();
     }
     
     @GET
     @Path("{idSucursal}")
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_JSON)
     public Sucursal getSucursal(
             @PathParam("idSucursal") Long idSucursal) {
         
@@ -57,7 +56,7 @@ public class SucursalesREST {
     }
     
     @POST
-    @Consumes(MediaType.APPLICATION_XML)
+    @Consumes(MediaType.APPLICATION_JSON)
     public void updateSucursal(Sucursal sucursal) {
         sucursalesEJB.updateSucursal(sucursal);
     }

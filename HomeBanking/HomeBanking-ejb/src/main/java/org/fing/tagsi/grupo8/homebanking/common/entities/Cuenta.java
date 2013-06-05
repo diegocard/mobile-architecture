@@ -1,7 +1,5 @@
 package org.fing.tagsi.grupo8.homebanking.common.entities;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -16,7 +14,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @XmlRootElement
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Cuenta implements Serializable {
     private static final long serialVersionUID = 1L;
     
@@ -26,9 +23,14 @@ public class Cuenta implements Serializable {
     private String tipo;
     private String numero;
     private long saldo;
+
+    @ManyToOne
+    private Usuario usuario;
     
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "cuentaOrigen", orphanRemoval = true)
-    private List<Transferencia> transferencias;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuentaDestino", fetch = FetchType.LAZY)
+    private List<Transferencia> transferenciasDestino;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuentaOrigen", fetch = FetchType.LAZY)
+    private List<Transferencia> transferenciasOrigen;
 
     public Long getId() {
         return id;
@@ -62,13 +64,27 @@ public class Cuenta implements Serializable {
         this.saldo = saldo;
     }
 
-    public List<Transferencia> getTransferencias() {
-        return transferencias;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setTransferencias(List<Transferencia> transferencias) {
-        this.transferencias = transferencias;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
-    
-    
+
+    public List<Transferencia> getTransferenciasDestino() {
+        return transferenciasDestino;
+    }
+
+    public void setTransferenciasDestino(List<Transferencia> transferenciasDestino) {
+        this.transferenciasDestino = transferenciasDestino;
+    }
+
+    public List<Transferencia> getTransferenciasOrigen() {
+        return transferenciasOrigen;
+    }
+
+    public void setTransferenciasOrigen(List<Transferencia> transferenciasOrigen) {
+        this.transferenciasOrigen = transferenciasOrigen;
+    }
 }
