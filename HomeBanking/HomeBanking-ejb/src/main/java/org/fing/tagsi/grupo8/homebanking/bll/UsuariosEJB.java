@@ -5,6 +5,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -26,11 +27,6 @@ public class UsuariosEJB {
     }
     
     public List<Usuario> getAllUsuarios(){
-        /*CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<Usuario> query = builder.createQuery(Usuario.class);
-        Root<Usuario> usuarioRoot = query.from(Usuario.class);
-        query.select(usuarioRoot);
-        List<Usuario> usuarios = em.createQuery(query).getResultList();*/
         List<Usuario> usuarios = em.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList();
         return usuarios;    
     }
@@ -50,16 +46,18 @@ public class UsuariosEJB {
     
     // BLL
     public boolean validarUsuario(String usuario, String password, boolean admin){
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<Usuario> query = builder.createQuery(Usuario.class);
-        Root<Usuario> usuarioRoot = query.from(Usuario.class);
-        query.select(usuarioRoot);
-        Predicate p1 = builder.equal(usuarioRoot.get(Usuario_.usuario), usuario);
-        Predicate p2 = builder.equal(usuarioRoot.get(Usuario_.password), password);
-        query.where(builder.and(p1, p2));
         
-        List<Usuario> usuarios = em.createQuery(query).getResultList();
+        String sql = 
+            "select u " +
+            "from Usuario u " + 
+            "where u.usuario = :usuario and u.password = :password and u.admin = :admin";
         
-        return usuarios.size() == 1;
+        int validar = em.createQuery(sql, int.class)
+                .setParameter("usuario", usuario)
+                .setParameter("password", password)
+                .setParameter("admin", admin)
+                .getResultList().size();
+        
+        return validar == 1;
     }
 }

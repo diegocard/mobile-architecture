@@ -25,6 +25,8 @@ public class Usuario implements Serializable {
     private String usuario;
     private String password;
     
+    private boolean admin;
+    
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
         orphanRemoval = true, mappedBy = "usuario", targetEntity = Cuenta.class)
     private List<Cuenta> cuentas;
@@ -67,6 +69,18 @@ public class Usuario implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean getAdmin() {
+        return admin;
+    }
+    
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 
     public List<Cuenta> getCuentas() {
