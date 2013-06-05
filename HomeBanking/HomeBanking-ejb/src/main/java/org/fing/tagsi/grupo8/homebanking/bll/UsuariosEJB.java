@@ -49,7 +49,7 @@ public class UsuariosEJB {
     }
     
     // BLL
-    public boolean validarUsuario(String usuario, String password){
+    public boolean validarUsuario(String usuario, String password, boolean admin){
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Usuario> query = builder.createQuery(Usuario.class);
         Root<Usuario> usuarioRoot = query.from(Usuario.class);

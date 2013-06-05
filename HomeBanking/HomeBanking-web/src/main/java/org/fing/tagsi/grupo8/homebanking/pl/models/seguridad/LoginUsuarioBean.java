@@ -42,7 +42,7 @@ public class LoginUsuarioBean {
     public LoginUsuarioBean() {}
     
     public String login(){
-        if (UsuariosSA.getUsuarios().validarUsuario(usuario, password)){
+        if (UsuariosSA.getUsuarios().validarUsuario(usuario, password, true)){
             sessionBean.setNombre(usuario);
             sessionBean.setLogueado(true);
         }

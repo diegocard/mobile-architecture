@@ -69,6 +69,18 @@ public class UsuariosREST {
         usuariosEJB.removeUsuario(idUsuario);
     }
     
+    @POST
+    @Path("/validar/{usuario}/{password}/{admin}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public boolean validarUsuario(
+            @PathParam("usuario") String usuario,
+            @PathParam("password") String password,
+            @PathParam("admin") boolean admin){
+        
+        return usuariosEJB.validarUsuario(usuario, password, admin);
+    }
+    
     public UsuariosEJB lookupUsuariosBean(){
         try {
             Context c = new InitialContext();
