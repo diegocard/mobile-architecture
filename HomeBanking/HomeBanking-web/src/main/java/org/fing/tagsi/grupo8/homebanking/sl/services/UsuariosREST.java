@@ -1,6 +1,8 @@
 package org.fing.tagsi.grupo8.homebanking.sl.services;
 
+import com.sun.jersey.api.json.JSONWithPadding;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -13,6 +15,8 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 
 import org.fing.tagsi.grupo8.homebanking.bll.UsuariosEJB;
@@ -45,6 +49,21 @@ public class UsuariosREST {
     }
     
     @GET
+    @Path("/jsonp")
+    @Produces({"application/javascript"})
+    public JSONWithPadding getAllUsuariosJSONP(
+            @QueryParam("callback") String callback)
+    {
+        List<Usuario> usuarios = usuariosEJB.getAllUsuarios();
+        
+        for (Usuario u: usuarios){
+            u.setCuentas(new ArrayList<Cuenta>());
+        }
+        
+        return new JSONWithPadding(new GenericEntity<Collection<Usuario>>(usuarios){}, callback);
+    }
+    
+    @GET
     @Path("{idUsuario}")
     @Produces(MediaType.APPLICATION_JSON)
     public Usuario getUsuario(@PathParam("idUsuario") Long idUsuario){
@@ -69,7 +88,7 @@ public class UsuariosREST {
         usuariosEJB.removeUsuario(idUsuario);
     }
     
-    @POST
+    @GET
     @Path("/validar/{usuario}/{password}/{admin}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -79,6 +98,22 @@ public class UsuariosREST {
             @PathParam("admin") boolean admin){
         
         return usuariosEJB.validarUsuario(usuario, password, admin);
+    }
+    
+    @GET
+    @Path("/validar/jsonp/{usuario}/{password}/{admin}")
+    @Produces({"application/javascript"})
+    public JSONWithPadding validarUsuarioJSONP(
+            @PathParam("usuario") String usuario,
+            @PathParam("password") String password,
+            @PathParam("admin") boolean admin,
+            @QueryParam("callback") String callback){
+        
+        boolean validar = usuariosEJB.validarUsuario(usuario, password, admin);
+        
+        JSONWithPadding jsonp = new JSONWithPadding(validar, callback);
+        
+        return jsonp;
     }
     
     public UsuariosEJB lookupUsuariosBean(){
