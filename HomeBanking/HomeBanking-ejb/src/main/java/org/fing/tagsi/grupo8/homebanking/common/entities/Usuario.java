@@ -71,10 +71,6 @@ public class Usuario implements Serializable {
         this.password = password;
     }
 
-    public boolean getAdmin() {
-        return admin;
-    }
-    
     public boolean isAdmin() {
         return admin;
     }
