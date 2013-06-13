@@ -14,16 +14,27 @@ function eventosInicio(){
 
 /* ============================== Logica de la aplicacion ============================== */
 
-function loginSuccess(data){
-    alert(data);
+function redirectToPage(page){
+    location.href=page;
 }
 
-function login(){
-    
+function loginSuccess(data){
+    alert(data);
+    if (data == true){
+        var Usuario = $("#input-user").val();
+        var Pass = $("#input-password").val();
+        //recordarLogin(Usuario, Pass);
+        redirectToPage('#page-inicio');
+    }else{
+        alert('Username or password are incorrect');
+    }
+}
+
+function login(){    
     var Usuario = $("#input-user").val();
     var Pass = $("#input-password").val();
-    var url=URLBase + 'usuarios/validar/jsonp/' + Usuario + '/' + Pass + '/false';
-
+    var IsAdmin = $("#lbl-is-admin").hasClass('ui-checkbox-on');
+    var url=URLBase + 'usuarios/validar/jsonp/' + Usuario + '/' + Pass + '/' + IsAdmin;
     $.ajax({
         url: url,
         dataType: 'jsonp',

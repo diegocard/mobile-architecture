@@ -41,6 +41,10 @@
                     </label>
                     <input name="" id="input-password" placeholder="" value="" type="password">
                 </div>
+                <input id="input-is-admin" name="" data-theme="c" type="checkbox">
+                <label id="lbl-is-admin" for="input-is-admin">
+                    Are you an Administrator?
+                </label>
                 <a id="btn-login" data-role="button" href="#page1">
                     Login
                 </a>
@@ -57,20 +61,79 @@
             </div>
             <div data-role="content">
                 <h2>
-                    Estado de cuenta
+                    Listado de cuentas
                 </h2>
-                <div data-role="fieldcontain">
-                    <label for="txtUsuario">
-                        Usuario
-                    </label>
-                    <input name="" id="txtUsuario" placeholder="" value="" type="text">
+                <ul id="dividerCuentas" data-role="listview" data-divider-theme="b" data-inset="true">
+                    <li data-role="list-divider" role="heading">
+                        Cuentas
+                    </li>
+                    <li data-theme="c">
+                        <a id="nrocuenta1" href="#page-detalle-cuenta" data-transition="slide">
+                            Cuenta1
+                        </a>
+                    </li>
+                    <li data-theme="c">
+                        <a id="nrocuenta2" href="#page-detalle-cuenta" data-transition="slide">
+                            Cuenta2
+                        </a>
+                    </li>
+                    <li data-theme="c">
+                        <a id="nrocuenta3" href="#page-detalle-cuenta" data-transition="slide">
+                            Cuenta3
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div data-theme="a" data-role="footer" data-position="fixed">
+                <div id="btnHome" data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li>
+                            <a href="#page-inicio" data-transition="fade" data-theme="" data-icon="home"
+                            class="ui-btn-active ui-state-persist">
+                                Inicio
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#page-transferencia" data-transition="fade" data-theme="" data-icon="bars">
+                                Transferencia
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#page-historial" data-transition="fade" data-theme="" data-icon="info">
+                                Historial
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                <div data-role="fieldcontain">
-                    <label for="txtSaldo">
-                        Saldo
-                    </label>
-                    <input name="" id="txtSaldo" placeholder="" value="" type="text">
-                </div>
+            </div>
+        </div>
+        <!-- Fin inicio -->
+
+        <!-- Inicio -->
+        <div data-role="page" id="page-detalle-cuenta">
+            <div data-theme="a" data-role="header">
+                <h3>
+                    Home Banking
+                </h3>
+            </div>
+            <div data-role="content">
+                <h2>
+                    Detalle de cuenta
+                </h2>
+                <table id="tbl-detalle-cuenta">
+                    <tr>
+                        <td><label for="txtCuentaNumero">Numero: </label></td>
+                        <td id="txtCuentaNumero">Cuenta1</td>
+                    </tr>
+                    <tr>
+                        <td><label for="txtCuentaTipo">Tipo: </label></td>
+                        <td id="txtCuentaTipo">Tipo1</td>
+                    </tr>
+                    <tr>
+                        <td><label for="txtCuentaMonto">Saldo: </label></td>
+                        <td id="txtCuentaMonto">100</td>
+                    </tr>
+                </table>
             </div>
             <div data-theme="a" data-role="footer" data-position="fixed">
                 <div id="btnHome" data-role="navbar" data-iconpos="top">

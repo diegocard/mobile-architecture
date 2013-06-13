@@ -10,7 +10,6 @@ function obtenerBD(){
 function cargarBDInicial() {
 	obtenerBD().transaction(eliminarTablas, errorBD);
 	obtenerBD().transaction(iniciarTablaUsuario, errorBD);
-	guardarUsuario(1, 'Apellido1', 'Nombre1', 'Pass1', 'Usuario1');
 }
 
 // Elimina todas las tablas de la base
