@@ -112,6 +112,11 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.glassfish.maven.plugin</groupId>
+                <artifactId>maven-glassfish-plugin</artifactId>
+                <version>2.1</version>
+            </plugin>
         </plugins>
     </build>
     <repositories>
@@ -122,4 +127,11 @@
             <name>Repository for library EclipseLink (JPA 2.0)</name>
         </repository>
     </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>maven.java.net</id>
+            <name>Java.net Maven2 Repository</name>
+            <url>http://download.java.net/maven/2</url>
+        </pluginRepository>
+    </pluginRepositories>
 </project>

@@ -16,7 +16,7 @@ import org.fing.tagsi.grupo8.homebanking.common.entities.Transferencia;
 @Stateless
 @LocalBean
 public class TransferenciasEJB {
-    @PersistenceContext(unitName = "HomeBankingPU")
+    @PersistenceContext(unitName = "HomeBankingPersistenceUnit")
     private EntityManager em;
     
     // CRUD

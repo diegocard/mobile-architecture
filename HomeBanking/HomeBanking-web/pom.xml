@@ -17,10 +17,10 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
         <netbeans.compile.on.save>all</netbeans.compile.on.save>
         <jersey.version>1.17.1</jersey.version>
         <jackson.version>2.2.1</jackson.version>
+        <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
     </properties>
     
     <dependencies>
@@ -168,8 +168,27 @@
             <version>6.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>  
+            <groupId>org.primefaces</groupId>  
+            <artifactId>primefaces</artifactId>  
+            <version>3.3.1</version>  
+        </dependency>
+        <dependency>  
+            <groupId>org.primefaces</groupId>  
+            <artifactId>primefaces-mobile</artifactId>  
+            <version>0.9.5-SNAPSHOT</version>  
+        </dependency>    
     </dependencies>
 
+    <repositories>
+        <repository>  
+            <id>prime-repo</id>  
+            <name>PrimeFaces Maven Repository</name>  
+            <url>http://repository.primefaces.org</url>  
+            <layout>default</layout>  
+        </repository>  
+    </repositories>
+    
     <build>
         <plugins>
             <plugin>

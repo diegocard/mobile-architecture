@@ -15,7 +15,7 @@ import org.fing.tagsi.grupo8.homebanking.common.entities.Cuenta;
 @Stateless
 @LocalBean
 public class CuentasEJB {
-    @PersistenceContext(unitName = "HomeBankingPU")
+    @PersistenceContext(unitName = "HomeBankingPersistenceUnit")
     private EntityManager em;
     
     // CRUD

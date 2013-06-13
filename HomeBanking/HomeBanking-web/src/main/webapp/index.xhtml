@@ -3,7 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pm="http://primefaces.org/mobile"> 
     <h:body>
         <ui:composition template="/templates/layout.xhtml">
             <ui:define name="header">
@@ -16,6 +18,7 @@
                 <ui:fragment rendered="#{sessionBean.logueado}">
                     <h:link value="Administrar Sucursales" outcome="sucursales/listSucursales"/> <br/>
                     <h:link value="Administrar Usuarios" outcome="seguridad/listUsuarios"/> <br/>
+                    <p:calendar />
                 </ui:fragment>
                 <ui:fragment rendered="#{not sessionBean.logueado}">
                     <h3>Administrative app for Home Banking</h3>
