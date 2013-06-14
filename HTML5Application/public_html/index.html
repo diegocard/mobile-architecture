@@ -103,13 +103,18 @@
                                 Historial
                             </a>
                         </li>
+                        <li>
+                            <a href="#page-sucursales" data-transition="fade" data-theme="" data-icon="info">
+                                Sucursales
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
         <!-- Fin inicio -->
 
-        <!-- Inicio -->
+        <!-- Detalle de cuenta -->
         <div data-role="page" id="page-detalle-cuenta">
             <div data-theme="a" data-role="header">
                 <h3>
@@ -154,14 +159,19 @@
                                 Historial
                             </a>
                         </li>
+                        <li>
+                            <a href="#page-sucursales" data-transition="fade" data-theme="" data-icon="info">
+                                Sucursales
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
-        <!-- Fin inicio -->
+        <!-- Fin detalle de cuenta -->
 
         <!-- Transferencia -->
-        <div data-role="page" id="page-trasferencia">
+        <div data-role="page" id="page-transferencia">
             <div data-theme="a" data-role="header">
                 <h3>
                     Transferencia
@@ -203,10 +213,164 @@
                                 Historial
                             </a>
                         </li>
+                        <li>
+                            <a href="#page-sucursales" data-transition="fade" data-theme="" data-icon="info">
+                                Sucursales
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
         <!-- Fin Transferencia -->
+
+        <!-- Historial -->
+        <div data-role="page" id="page-historial">
+            <div data-theme="a" data-role="header">
+                <h3>
+                    Historial
+                </h3>
+            </div>
+            <div data-role="content">                
+                <ul>
+                    <li>Transferencia 1</li>
+                    <li>Transferencia 2</li>
+                    <li>Transferencia 3</li>
+                    <li>Transferencia 4</li>
+                </ul>
+            </div>
+            <div data-theme="a" data-role="footer" data-position="fixed">
+                <div id="btnHome" data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li>
+                            <a href="#page-inicio" data-transition="fade" data-theme="" data-icon="home">
+                                Inicio
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#page-transferencia" data-transition="fade" data-theme="" data-icon="bars">
+                                Transferencia
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#page-historial" data-transition="fade" data-theme="" data-icon="info"
+                                class="ui-btn-active ui-state-persist">
+                                Historial
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#page-sucursales" data-transition="fade" data-theme="" data-icon="info">
+                                Sucursales
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Fin Historial -->
+
+        <!-- Sucursales -->
+        <div data-role="page" id="page-sucursales">
+            <div data-theme="a" data-role="header">
+                <h3>
+                    Sucursales
+                </h3>
+            </div>
+            <div data-role="content">
+                <ul id="dividerSucursales" data-role="listview" data-divider-theme="b" data-inset="true">
+                    <li data-role="list-divider" role="heading">
+                        Sucursales
+                    </li>
+                    <li data-theme="c">
+                        <a id="nroSucursal1" href="#page-detalle-sucursal" data-transition="slide">
+                            Sucuersal 1
+                        </a>
+                    </li>
+                    <li data-theme="c">
+                        <a id="nroSucursal2" href="#page-detalle-sucursal" data-transition="slide">
+                            Sucursal 2
+                        </a>
+                    </li>
+                    <li data-theme="c">
+                        <a id="nroSucursal3" href="#page-detalle-sucursal" data-transition="slide">
+                            Sucursal 3
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div data-theme="a" data-role="footer" data-position="fixed">
+                <div id="btnHome" data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li>
+                            <a href="#page-inicio" data-transition="fade" data-theme="" data-icon="home">
+                                Inicio
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#page-transferencia" data-transition="fade" data-theme="" data-icon="bars">
+                                Transferencia
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#page-historial" data-transition="fade" data-theme="" data-icon="info">
+                                Historial
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#page-sucursales" data-transition="fade" data-theme="" data-icon="info"
+                                class="ui-btn-active ui-state-persist">
+                                Sucursales
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Fin Sucursales -->
+
+        <!-- Detalle de sucursal -->
+        <div data-role="page" id="page-detalle-sucursal">
+            <div data-theme="a" data-role="header">
+                <h3>
+                    Detalle de sucursal
+                </h3>
+            </div>
+            <div data-role="content">
+                <table id="tbl-detalle-cuenta">
+                    <tr>
+                        <td><label for="txtCuentaNumero">Sucursal: </label></td>
+                        <td id="txtCuentaNumero">Cuenta1</td>
+                    </tr>
+                </table>
+            </div>
+            <div data-theme="a" data-role="footer" data-position="fixed">
+                <div id="btnHome" data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li>
+                            <a href="#page-inicio" data-transition="fade" data-theme="" data-icon="home">
+                                Inicio
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#page-transferencia" data-transition="fade" data-theme="" data-icon="bars">
+                                Transferencia
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#page-historial" data-transition="fade" data-theme="" data-icon="info">
+                                Historial
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#page-sucursales" data-transition="fade" data-theme="" data-icon="info"
+                                class="ui-btn-active ui-state-persist">
+                                Sucursales
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Fin Detalle de sucursal -->
     </body>
 </html>

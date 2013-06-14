@@ -1,4 +1,3 @@
-
 /* ========================== Manejo de tablas ========================== */
 
 //Ejecuta las transacciones pendientes y devuelve la base
@@ -8,8 +7,9 @@ function obtenerBD(){
 
 // Invoca la creacion de las tablas de la base de datos en caso de que no existan
 function cargarBDInicial() {
-	obtenerBD().transaction(eliminarTablas, errorBD);
+	obtenerBD().transaction(eliminarTablas, errorBD);	
 	obtenerBD().transaction(iniciarTablaUsuario, errorBD);
+	guardarUsuarioPersistente('asd','das');
 }
 
 // Elimina todas las tablas de la base
@@ -42,19 +42,54 @@ function iniciarTablaTransferencia(tx) {
 
 // Crea la tabla que guarda los datos del usuario (unico)
 function iniciarTablaUsuario(tx) {
-	tx.executeSql('CREATE TABLE IF NOT EXISTS Usuario (ID unique, Apellido, Nombre, Password, Usuario)');	
+	tx.executeSql('CREATE TABLE IF NOT EXISTS Usuario (Usuario, Password, IsAdmin)');	
 }
 
 /* ========================== Manejo de datos ========================== */
 
-function guardarUsuario(ID, Apellido, Nombre, Password, Usuario){
-	
-	var query = 'INSERT INTO Usuario (ID, Apellido, Nombre, Password, Usuario) ' +
-				'VALUES ("' + ID + '", "' + Apellido + '", "' + Nombre + '", "' + Password + '", "' + Usuario +'")';
+function cargarUsuarioPersistente(){
+	var db = obtenerBD();
+	var query = 'SELECT * FROM Usuario';
+	db.transaction(
+		function(tx){
+			tx.executeSql(
+				query, 
+				[], 
+				function (tx, resultado){
+					var CantFilas = resultado.rows.length;					
+					if (CantFilas > 0){								
+						Usuario = resultado.rows.item(0).Usuario;
+						Password = resultado.rows.item(0).Password;
+						IsAdmin = resultado.rows.item(0).IsAdmin;
+						login();
+					}					
+				}, 
+				errorBD
+			);
+		},
+		errorBD
+	);
+}
+
+function guardarUsuarioPersistente(Usuario, Password, IsAdmin){
+	//Solo puede haber 1 usuario persistente
+	//En caso de que haya alguno guardado, lo elimino
+	var queryDelete = 'DELETE FROM USUARIO';
 	var db = obtenerBD();
 	db.transaction(
 		function(tx){
-			tx.executeSql(query);
+			tx.executeSql(queryDelete);
+		},
+		errorBD
+	);
+	alert('elimina los anteriores');
+	//Guardo el nuevo usuario persistente
+	var queryInsert = 'INSERT INTO Usuario (Usuario, Password, IsAdmin) ' +
+				'VALUES ("' + Usuario + '", "' + Password + '", "' + IsAdmin + '")';
+	var db = obtenerBD();
+	db.transaction(
+		function(tx){
+			tx.executeSql(queryInsert);
 		},
 		errorBD
 	);
