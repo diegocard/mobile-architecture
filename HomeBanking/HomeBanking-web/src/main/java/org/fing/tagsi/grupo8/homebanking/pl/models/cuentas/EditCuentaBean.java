@@ -3,6 +3,7 @@ package org.fing.tagsi.grupo8.homebanking.pl.models.cuentas;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -35,6 +36,10 @@ public class EditCuentaBean implements Serializable {
     
     public void setCuenta(Cuenta cuenta){
         this.cuenta = cuenta;
+         
+//        if (cuenta != null && cuenta.getUsuario() != null) {
+//            this.transferencias = TransferenciasSA.getTransferencias().getAllTransferencias(); //cuenta.getUsuario().getId(), cuenta.getId()
+//        }
     }
     
     public List<Transferencia> getTransferencias(){
@@ -47,10 +52,8 @@ public class EditCuentaBean implements Serializable {
     
     public EditCuentaBean() {}
     
-    public void init(){
-        cuenta = CuentasSA.getCuentas().getCuenta(idCuenta);
-        transferencias = TransferenciasSA.getTransferencias().getAllTransferencias(cuenta.getUsuario().getId(), cuenta.getId());
-    }
+    @PostConstruct
+    public void init(){ }
     
     public String edit(){
         CuentasSA.getCuentas().updateCuenta(cuenta);

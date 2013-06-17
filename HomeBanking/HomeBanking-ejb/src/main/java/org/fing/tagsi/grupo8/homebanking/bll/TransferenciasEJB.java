@@ -31,11 +31,12 @@ public class TransferenciasEJB {
     
     public List<Transferencia> getAllTransferencias(Long idUsuario){
         String sql =
-            "select t from Transferencia t " +
-            "where exists ( " +
-            "	select c from Cuenta c where c.usuario.id = :idUsuario and " +
-            "	((t.cuentaOrigen = c.id) or (t.cuentaDestino = c.id)) " +
-            ")";
+            "select t.id, t.descripcion, t.monto, t.cuentaDestino, t.cuentaOrigen "+
+                "from " + 
+                    "Transferencia t, Cuenta c " +
+                "where " +
+                    "(t.cuentaOrigen.id = c.id or t.cuentaDestino.id = c.id) and " +
+                    "c.usuario.id = :idUsuario;";
         
         TypedQuery<Transferencia> query =
             em.createQuery(sql, Transferencia.class).
@@ -46,10 +47,13 @@ public class TransferenciasEJB {
     
     public List<Transferencia> getAllTransferencias(Long idUsuario, Long idCuenta){
         String sql =
-            "select * from transferencia t" + 
-            "where (t.cuentadestino_id = :idCuenta or t.cuentaorigen_id = :idCuenta) and " +
-                "exists (select * from usuario_cuenta as uc where uc.usuario_id = :idUsuario and" +
-                    "((t.cuentadestino_id = uc.cuentas_id) or (t.cuentaorigen_id = uc.cuentas_id)))";
+            "select t.id, t.descripcion, t.monto, t.cuentaDestino, t.cuentaOrigen "+
+                "from " + 
+                    "Transferencia t, Cuenta c " +
+                "where " +
+                    "(t.cuentaOrigen.id = c.id or t.cuentaDestino.id = c.id) and " +
+                    "c.usuario.id = :idUsuario and " +
+                    "c.id = :idCuenta;";
 
         TypedQuery<Transferencia> query =
             em.createQuery(sql, Transferencia.class).
