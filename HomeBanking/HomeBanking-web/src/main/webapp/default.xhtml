@@ -1,29 +1,19 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:pm="http://primefaces.org/mobile">
-    <h:head>
-        <title>HB!</title>
-        <h:outputScript name="jquery-1.9.1.min.js" library="js" />
-    </h:head>
-    <h:body>
-        <div data-add-back-btn="true" data-role="page" data-theme="b">
-            <div id="header" data-role="header" data-theme="a">
-                <h1>Home Banking</h1>
-            </div>
-            <div id="content" data-role="content" data-theme="c">
-                <h:panelGrid style="margin: 0 auto;">
-                    <h1>Administration</h1>
-                </h:panelGrid>
-                <h:panelGrid style="margin: 0 auto;">
-                    <h:button value="Enter" outcome="index"/>
-                    <h:graphicImage value="resources/images/homebanking.jpg" />
-                </h:panelGrid>
-                
-            </div>
-        </div>
-        
-    </h:body>
-</html>
-
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pm="http://primefaces.org/mobile"
+      contentType="text/html">
+    
+    <pm:page title="PrimeFaces News">
+        <!-- Groups -->
+        <pm:view id="groups" swatch="c">
+            <pm:header title="News" />
+            <pm:content> 
+                <p:dataList value="#{listSucursalesBean.sucursalesList}" var="sucursal">
+                    <h:outputText value="#{sucursal.nombre}" />
+                </p:dataList> 
+            </pm:content> 
+        </pm:view>
+    </pm:page>
+</f:view>

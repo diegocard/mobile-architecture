@@ -13,7 +13,7 @@ import org.fing.tagsi.grupo8.homebanking.common.entities.Sucursal;
 
 @Stateless
 @LocalBean
-public class SucursalesEJB {
+public class SucursalesEJB { 
     @PersistenceContext(unitName = "HomeBankingPersistenceUnit")
     private EntityManager em;
 

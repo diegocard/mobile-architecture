@@ -1,30 +1,309 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<f:view xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:pm="http://primefaces.org/mobile"> 
-    <h:body>
-        <ui:composition template="/templates/layout.xhtml">
-            <ui:define name="header">
-                <h1>Index</h1>
-                <ui:fragment rendered="#{not sessionBean.logueado}">
-                    <a href="faces/seguridad/login.xhtml" data-rel="dialog" data-transition="slidedown" class="ui-btn-right"  data-icon="arrow-r">Sign In</a>
-                </ui:fragment>
-            </ui:define>
-            <ui:define name="content">
+      xmlns:pm="http://primefaces.org/mobile"
+      xmlns:f="http://java.sun.com/jsf/core"
+      contentType="text/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    
+    <pm:page title="Title">
+        <f:facet name="postinit">
+            <h:outputScript library="primefaces" name="gmap/gmap.js" />
+            <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script> 
+        </f:facet>
+        <pm:view id='index' swatch="e">
+            <pm:header title='Main'>  
+                <f:facet name="right">
+                    <ui:fragment rendered="#{not sessionBean.logueado}">
+                        <!--<h:outputLink value="#login">Login</h:outputLink>-->
+                        <p:button value="Login" icon="back" href="#login" />
+                    </ui:fragment>
+                    <ui:fragment rendered="#{sessionBean.logueado}">
+                        <!--<h:outputLink value="#logout">Logout</h:outputLink>-->
+                        <p:button value="Logout" icon="back" href="#logout" />
+                    </ui:fragment>
+                </f:facet>
+            </pm:header>
+            <pm:content>
                 <ui:fragment rendered="#{sessionBean.logueado}">
-                    <h:link value="Administrar Sucursales" outcome="sucursales/listSucursales"/> <br/>
-                    <h:link value="Administrar Usuarios" outcome="seguridad/listUsuarios"/> <br/>
-                    <p:calendar />
+                    <pm:navBar>
+                        <p:button value="Sucursales" icon="home" href="#sucursales" />
+                        <p:button value="Usuarios" icon="grid" href="#usuarios" />
+                    </pm:navBar>
                 </ui:fragment>
-                <ui:fragment rendered="#{not sessionBean.logueado}">
-                    <h3>Administrative app for Home Banking</h3>
-                </ui:fragment>
-            </ui:define>
-        </ui:composition>
-    </h:body>
-</html>
+            </pm:content>
+        </pm:view>
+        <pm:view id='login' swatch="e">
+            <pm:header title='Login'>
+            </pm:header>
+            <pm:content>
+                Login
+                <h:form>
+                    <pm:field>
+                        <h:outputLabel for='loginUsuario' value='Usuario' />
+                        <h:inputText id='loginUsuario' value='#{loginUsuarioBean.usuario}' />
+                    </pm:field>
+                    
+                    <pm:field>
+                        <h:outputLabel for='loginPassword' value='Password' />
+                        <h:inputText id='loginPassword' value='#{loginUsuarioBean.password}' />
+                    </pm:field>
+                    
+                    <h:commandButton value="Login" action="#{loginUsuarioBean.login}" />
+                </h:form>
+            </pm:content>
+        </pm:view>
+        <pm:view id='logout' swatch="e">
+            <pm:header title='Logout'>
+            </pm:header>
+            <pm:content>
+                Esta seguro que desea cerrar sesión?
+                <h:form>
+                    <pm:buttonGroup>
+                        <h:commandButton value="Si" action="#{loginUsuarioBean.logout}" />
+                        <p:commandButton value="No" action="pm:index?reverse=true" />
+                    </pm:buttonGroup>
+                </h:form>
+            </pm:content>
+        </pm:view>
+        <pm:view id='sucursales' swatch="e">
+            <pm:header title='Sucursales'>
+            </pm:header>
+            <pm:content>
+                <h:form>
+                    <pm:navBar>
+                        <p:button value="Crear" icon="plus" href="#sucursalesCrear" />
+                        <p:button value="Listar" icon="arrow-d" href="#sucursalesListar" />
+                    </pm:navBar>
+                </h:form>
+                <p:separator />
+                <p:gmap center="-34.895585, -56.155586" zoom="15" type="HYBRID" style="width:100%;height:15em" widgetVar="gmap"/> 
+            </pm:content>
+        </pm:view>
+        <pm:view id='sucursalesCrear' swatch="e">
+            <pm:header title='Crear Sucursal'>
+            </pm:header>
+            <pm:content>
+                <h:form>
+                    <pm:field>
+                        <h:outputLabel for='sucursalNombre' value='Nombre' />
+                        <h:inputText id='sucursalNombre' value='#{addSucursalBean.sucursal.nombre}' />
+                    </pm:field>
+                    
+                    <pm:field>
+                        <h:outputLabel for='sucursalDireccion' value='Direccion' />
+                        <h:inputText id='sucursalDireccion' value='#{addSucursalBean.sucursal.direccion}' />
+                    </pm:field>
+                    
+                    <pm:field>
+                        <h:outputLabel for='sucursalX' value='X' />
+                        <h:inputText id='sucursalX' value='#{addSucursalBean.sucursal.x}' />
+                    </pm:field>
+                    
+                    <pm:field>
+                        <h:outputLabel for='sucursalY' value='Y' />
+                        <h:inputText id='sucursalY' value='#{addSucursalBean.sucursal.y}' />
+                    </pm:field>
+                    
+                    <h:commandButton value="Crear Sucursal" action="#{addSucursalBean.add}"/>
+                </h:form>
+            </pm:content>
+        </pm:view>
+        <pm:view id='sucursalesListar' swatch="e">
+            <pm:header title='Sucursales' />
+            <pm:content> 
+                <h:form id="formListaSucursales">
+                    <p:dataList value="#{listSucursalesBean.sucursalesList}" var="sucursal" type="inset">
+                        <p:column>
+                            <p:commandLink value="#{sucursal.nombre}" update=":editSucursalForm" action="pm:sucursal">
+                                <f:setPropertyActionListener value="#{sucursal}" target="#{editSucursalBean.sucursal}" />
+                            </p:commandLink>
+                        </p:column>
+                    </p:dataList>
+                </h:form> 
+            </pm:content> 
+        </pm:view>
+        <pm:view id='sucursal' swatch="e">
+            <pm:header title='Sucursal'>
+            </pm:header>
+            <pm:content>
+                <h:form id="editSucursalForm">
+                    <pm:field>
+                        <h:outputLabel for='editSucursalNombre' value='Nombre' />
+                        <h:inputText id='editSucursalNombre' value='#{editSucursalBean.sucursal.nombre}' />
+                    </pm:field>
+                    
+                    <pm:field>
+                        <h:outputLabel for='editSucursalDireccion' value='Direccion' />
+                        <h:inputText id='editSucursalDireccion' value='#{editSucursalBean.sucursal.direccion}' />
+                    </pm:field>
+                    
+                    <pm:field>
+                        <h:outputLabel for='editSucursalX' value='X' />
+                        <h:inputText id='editSucursalX' value='#{editSucursalBean.sucursal.x}' />
+                    </pm:field>
+                    
+                    <pm:field>
+                        <h:outputLabel for='editSucursalY' value='Y' />
+                        <h:inputText id='editSucursalY' value='#{editSucursalBean.sucursal.y}' />
+                    </pm:field>
+                     
+                    <h:commandButton value="Actualizar" action="#{editSucursalBean.edit}"/> 
+                    <h:commandButton value="Eliminar" action="#{deleteSucursalBean.delete(editSucursalBean.sucursal.id)}"/> 
+                </h:form>
+            </pm:content> 
+        </pm:view>
+        <pm:view id='usuarios' swatch="e">
+            <pm:header title='Usuarios'>
+            </pm:header>
+            <pm:content>
+                <h:form>
+                    <pm:navBar>
+                        <p:button value="Crear" icon="plus" href="#usuariosCrear" />
+                        <p:button value="Listar" icon="arrow-d" href="#usuariosListar" />
+                        <p:button value="Cuentas" icon="arrow-d" href="#cuentasListar" />
+                    </pm:navBar>
+                </h:form>
+            </pm:content>
+        </pm:view>
+        <pm:view id='usuariosCrear' swatch="e">
+            <pm:header title='Crear Usuario'>
+            </pm:header>
+            <pm:content>
+                <h:form>
+                    <pm:field>
+                        <h:outputLabel for='usuarioNombre' value='Nombre' />
+                        <h:inputText id='usuarioNombre' value='#{addUsuarioBean.usuario.nombre}' />
+                    </pm:field>
+                    
+                    <pm:field>
+                        <h:outputLabel for='usuarioApellido' value='Apellido' />
+                        <h:inputText id='usuarioApellido' value='#{addUsuarioBean.usuario.apellido}' />
+                    </pm:field>
+                    
+                    <pm:field>
+                        <h:outputLabel for='usuarioUsuario' value='Usuario' />
+                        <h:inputText id='usuarioUsuario' value='#{addUsuarioBean.usuario.usuario}' />
+                    </pm:field>
+                    
+                    <pm:field>
+                        <h:outputLabel for='usuarioPassword' value='Password' />
+                        <h:inputText id='usuarioPassword' value='#{addUsuarioBean.usuario.password}' />
+                    </pm:field>
+                    
+                    <pm:field>
+                        <h:outputLabel for='usuarioAdministrador' value='Administrador' />
+                        <h:inputText id='usuarioAdministrador' value='#{addUsuarioBean.usuario.admin}' />
+                    </pm:field>
+                    
+                    <h:commandButton value="Crear Usuario" action="#{addUsuarioBean.add}"/>
+                </h:form>
+            </pm:content>
+        </pm:view>
+        <pm:view id='usuariosListar' swatch="e">
+            <pm:header title='Usuarios' />
+            <pm:content> 
+                <h:form id="formListaUsuarios">
+                    <p:dataList value="#{listUsuariosBean.usuarios}" var="usuario" type="inset">
+                        <p:column>
+                            <p:commandLink value="#{usuario.nombre} #{usuario.apellido}" update=":editUsuarioForm" action="pm:usuario">
+                                <f:setPropertyActionListener value="#{usuario}" target="#{editUsuarioBean.usuario}" />
+                            </p:commandLink>
+                        </p:column>
+                    </p:dataList>
+                </h:form> 
+            </pm:content> 
+        </pm:view>
+        <pm:view id='usuario' swatch="e">
+            <pm:header title='Usuario'>
+            </pm:header>
+            <pm:content>
+                <h:form id="editUsuarioForm">
+                    <pm:field>
+                        <h:outputLabel for='editUsuarioNombre' value='Nombre' />
+                        <h:inputText id='editUsuarioNombre' value='#{editUsuarioBean.usuario.nombre}' />
+                    </pm:field>
+                    
+                    <pm:field>
+                        <h:outputLabel for='editUsuarioApellido' value='Apellido' />
+                        <h:inputText id='editUsuarioApellido' value='#{editUsuarioBean.usuario.apellido}' />
+                    </pm:field>
+                    
+                    <pm:field>
+                        <h:outputLabel for='editUsuarioUsuario' value='Usuario' />
+                        <h:inputText id='editUsuarioUsuario' value='#{editUsuarioBean.usuario.usuario}' />
+                    </pm:field>
+                    
+                    <pm:field>
+                        <h:outputLabel for='editUsuarioPassword' value='Password' />
+                        <h:inputText id='editUsuarioPassword' value='#{editUsuarioBean.usuario.password}' />
+                    </pm:field>
+                    
+                    <pm:field>
+                        <h:outputLabel for='editUsuarioAdministrador' value='Administrador' />
+                        <h:inputText id='editUsuarioAdministrador' value='#{editUsuarioBean.usuario.admin}' />
+                    </pm:field>
+                    
+                    <h:commandButton value="Editar" action="#{editUsuarioBean.edit}"/>
+                    
+                </h:form>
+            </pm:content> 
+        </pm:view>
+        <pm:view id='cuentasListar' swatch="e">
+            <pm:header title='Cuentas' />
+            <pm:content> 
+                <h:form id="formListaCuentas">
+                    <p:dataList value="#{listCuentasBean.cuentas}" var="cuenta" type="inset">
+                        <p:column>
+                            <p:commandLink value="#{cuenta.usuario.nombre} #{cuenta.usuario.apellido} - Nro #{cuenta.numero}" update=":cuentaForm" action="pm:cuenta">
+                                <f:setPropertyActionListener value="#{cuenta}" target="#{editCuentaBean.cuenta}" />
+                            </p:commandLink>
+                        </p:column>
+                    </p:dataList>
+                </h:form> 
+            </pm:content> 
+        </pm:view>
+        <pm:view id='cuenta' swatch="e">
+            <pm:header title='Cuenta'>
+            </pm:header>
+            <pm:content>
+                <h:form id="cuentaForm">
+                    <pm:field>
+                        <h:outputLabel for='cuentaNumero' value='Número' />
+                        <h:inputText id='cuentaNumero' value='#{editCuentaBean.cuenta.numero}' />
+                    </pm:field>
+
+                    <pm:field>
+                        <h:outputLabel for='cuentaTipo' value='Tipo' />
+                        <h:inputText id='cuentaTipo' value='#{editCuentaBean.cuenta.tipo}'  />
+                    </pm:field>
+
+                    <pm:field>
+                        <h:outputLabel for='cuentaSaldo' value='Saldo' /> 
+                        <h:inputText id='cuentaSaldo' value='#{editCuentaBean.cuenta.saldo}' />
+                    </pm:field>
+
+                    <pm:field>
+                        <h:outputLabel for='cuentaUsuario' value='Usuario' />
+                        <h:inputText id='cuentaUsuario' value='#{editCuentaBean.cuenta.usuario.nombre} #{editCuentaBean.cuenta.usuario.apellido}' />
+                    </pm:field>
+                    
+                    
+                    <h:outputLabel for='transferenciasCuentaUsuario' value='Transferencias' />
+                    
+                    <p:dataTable id="transferenciasCuentaUsuario" var="transferencia" value="#{editCuentaBean.transferencias}">
+                        <p:column id="cuentaOrigen" headerText="Cuenta Origen" style="width:24%">
+                            <h:outputText value="#{transferencia.cuentaOrigen.numero}" />
+                        </p:column>
+                        <p:column id="cuentaDestino" headerText="Cuenta Destino" style="width:24%">
+                            <h:outputText value="#{transferencia.cuentaDestino.numero}" />
+                        </p:column>
+                    </p:dataTable>
+                    
+                </h:form>
+            </pm:content> 
+        </pm:view>
+    </pm:page>
+</f:view>
 

@@ -23,6 +23,7 @@ public class AddSucursalBean {
     
     public String add(){
         SucursalesSA.getSucursales().addSucursal(sucursal);
-        return "/sucursales/listSucursales.xhtml?faces-redirect=true";
+        sucursal = null;
+        return "index";
     }
 }

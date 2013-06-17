@@ -23,6 +23,7 @@ public class AddUsuarioBean {
     
     public String add(){
         UsuariosSA.getUsuarios().addUsuario(usuario);
-        return "/index.xhtml";
+        usuario = null;
+        return "index";
     }
 }

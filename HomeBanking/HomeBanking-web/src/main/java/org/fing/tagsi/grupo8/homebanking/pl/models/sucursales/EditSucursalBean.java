@@ -38,6 +38,7 @@ public class EditSucursalBean implements Serializable {
     
     public String edit(){
         SucursalesSA.getSucursales().updateSucursal(sucursal);
-        return "/sucursales/listSucursales.xhtml?faces-redirect=true";
+        sucursal = null;
+        return "index";
     }
 }
