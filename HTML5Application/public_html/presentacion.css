@@ -5,6 +5,10 @@
   text-align: right;
 }
 
+#tbl-detalle-cuenta{
+	border: 2px solid black;
+}
+
 /** CSS for non-standard jQuery Mobile styles or Codiqa components **/
 .split-wrapper {
   width: 100%;
