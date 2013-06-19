@@ -32,10 +32,9 @@ function loginPersistente(){
 }
 
 function loginSuccess(data){
-    alert(data);
     if (data == true){
         UsuarioLogueado = true;
-        guardarUsuarioPersistente(Usuario, Pass);
+        guardarUsuarioPersistente(Usuario, Password, IsAdmin);
         redirectToPage('#page-inicio');
     }else{
         alert('Username or password are incorrect');
@@ -44,15 +43,14 @@ function loginSuccess(data){
 
 function btnLogin(){
     Usuario = $("#input-user").val();
-    Pass = $("#input-password").val();
+    Password = $("#input-password").val();
     IsAdmin = $("#lbl-is-admin").hasClass('ui-checkbox-on');
     login();    
 }
 
 function login(){
-    alert('entra a login con usuario=' + Usuario + ' y password=' + Password)
-    //Reliza login con los datos ya cargados en las variables Usuario, Pass e IsAdmin
-    var url=URLBase + 'usuarios/validar/jsonp/' + Usuario + '/' + Pass + '/' + IsAdmin;
+    //Reliza login con los datos ya cargados en las variables Usuario, Password e IsAdmin
+    var url=URLBase + 'usuarios/validar/jsonp/' + Usuario + '/' + Password + '/' + IsAdmin;
     $.ajax({
         url: url,
         dataType: 'jsonp',
