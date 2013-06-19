@@ -14,10 +14,10 @@ HTML5 based mobile application example, exploring different architectures, techn
 
 The applications include:
 
-# HomeBanking
+1. HomeBanking
   - HTML5 application that represents the administrative interface for a banking business. 
   - It also publishes REST services which are consumed by the Mobile application.
-# HTML5Application
+2. HTML5Application
   - Mobile application developed with phonegap.
   - Represents the mobile client.
   - Has local data persistence (PhoneGap storage).
