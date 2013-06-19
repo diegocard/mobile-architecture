@@ -45,19 +45,25 @@ public class UsuariosEJB {
     }
     
     // BLL
-    public boolean validarUsuario(String usuario, String password, boolean admin){
+    public int validarUsuario(String usuario, String password, boolean admin){
         
         String sql = 
             "select u " +
             "from Usuario u " + 
             "where u.usuario = :usuario and u.password = :password and u.admin = :admin";
         
-        int validar = em.createQuery(sql, int.class)
+        List<Usuario> usuarios = em.createQuery(sql, Usuario.class)
                 .setParameter("usuario", usuario)
                 .setParameter("password", password)
                 .setParameter("admin", admin)
-                .getResultList().size();
+                .getResultList();
         
-        return validar == 1;
+        if (usuarios.isEmpty()){
+            return -1;
+        } else {
+            return usuarios.get(0).getId().intValue();
+        }
+        
+        
     }
 }

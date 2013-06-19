@@ -197,25 +197,33 @@ public class TransferenciasREST {
     @Path("/realizarTransferencia")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Transferencia realizarTransferencia(
-            Long idUsuarioOrigen,
-            Long idCuentaOrigen,
-            Long idUsuarioDestino,
-            Long idCuentaDestino,
-            long monto,
-            String descripcion){
-    
-        Transferencia transferencia = null;
+    public Object realizarTransferencia(Transferencia t){
         
+        Transferencia transferencia = null;
+         
         try
         {
-            transferencia = transferenciasEJB.realizarTransferencia(idUsuarioOrigen,
-                idUsuarioDestino, idCuentaOrigen, idCuentaDestino,
-                    monto, descripcion);
-        }
+            transferencia =
+                transferenciasEJB.realizarTransferencia(
+                    t.getCuentaOrigen().getUsuario().getId(),
+                    t.getCuentaDestino().getUsuario().getId(),
+                    t.getCuentaOrigen().getId(),
+                    t.getCuentaDestino().getId(),
+                    t.getMonto(),
+                    t.getDescripcion());
+        } 
         catch(Exception e){
-        
+            Error error = new Error(e.getMessage());
+            return error;
         }
+        
+        transferencia.getCuentaOrigen().getUsuario().setCuentas(new ArrayList<Cuenta>());
+        transferencia.getCuentaDestino().getUsuario().setCuentas(new ArrayList<Cuenta>());
+
+        transferencia.getCuentaOrigen().setTransferenciasOrigen(new ArrayList<Transferencia>());
+        transferencia.getCuentaOrigen().setTransferenciasDestino(new ArrayList<Transferencia>());
+        transferencia.getCuentaDestino().setTransferenciasOrigen(new ArrayList<Transferencia>());
+        transferencia.getCuentaDestino().setTransferenciasDestino(new ArrayList<Transferencia>());
         
         return transferencia;
     }
@@ -251,7 +259,7 @@ public class TransferenciasREST {
     private TransferenciasEJB lookupTransferenciasBean() {
         try {
             javax.naming.Context c = new InitialContext();
-            return (TransferenciasEJB) c.lookup("java:global/HomeBanking-ear/HomeBanking-ejb-1.0-SNAPSHOT/TransferenciasEJB!org.fing.tagsi.grupo8.homebanking.bll.TransferenciasEJB");
+            return (TransferenciasEJB) c.lookup("java:global/HomeBanking-ear-1.0-SNAPSHOT/HomeBanking-ejb-1.0-SNAPSHOT/TransferenciasEJB!org.fing.tagsi.grupo8.homebanking.bll.TransferenciasEJB");
         } catch (NamingException ne) {
             throw new RuntimeException(ne);
         }
