@@ -47,10 +47,12 @@ public class LoginUsuarioBean {
             sessionBean.setLogueado(true);
         }
         
-        return "../index.xhtml?faces-redirect=true";
+        return "index";
     }
     
     public String logout(){
-        return "index.xhtml";
+        sessionBean.setNombre(null);
+        sessionBean.setLogueado(false);
+        return "index";
     }
 }

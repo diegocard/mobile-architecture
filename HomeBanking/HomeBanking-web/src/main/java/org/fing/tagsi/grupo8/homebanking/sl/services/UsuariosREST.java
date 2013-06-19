@@ -74,6 +74,20 @@ public class UsuariosREST {
         return usuario;
     }
     
+    @GET
+    @Path("/jsonp/{idUsuario}")
+    @Produces({"application/javascript"})
+    public JSONWithPadding getUsuarioJSONP(
+            @PathParam("idUsuario") Long idUsuario,
+            @QueryParam("callback") String callback)
+    {
+        Usuario usuario = usuariosEJB.getUsuario(idUsuario);
+        
+        usuario.setCuentas(new ArrayList<Cuenta>());
+        
+        return new JSONWithPadding(usuario, callback);
+    }
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -119,7 +133,7 @@ public class UsuariosREST {
     public UsuariosEJB lookupUsuariosBean(){
         try {
             Context c = new InitialContext();
-            return (UsuariosEJB) c.lookup("java:global/HomeBanking-ear-1.0-SNAPSHOT/HomeBanking-ejb-1.0-SNAPSHOT/UsuariosEJB!org.fing.tagsi.grupo8.homebanking.bll.UsuariosEJB");
+            return (UsuariosEJB) c.lookup("java:global/HomeBanking-ear/HomeBanking-ejb-1.0-SNAPSHOT/UsuariosEJB!org.fing.tagsi.grupo8.homebanking.bll.UsuariosEJB");
         }
         catch(NamingException ne){
             throw new RuntimeException(ne);

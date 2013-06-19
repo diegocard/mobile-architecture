@@ -72,7 +72,7 @@ public class SucursalesREST {
     private SucursalesEJB lookupSucursalesBean() {
         try {
             javax.naming.Context c = new InitialContext();
-            return (SucursalesEJB) c.lookup("java:global/HomeBanking-ear-1.0-SNAPSHOT/HomeBanking-ejb-1.0-SNAPSHOT/SucursalesEJB!org.fing.tagsi.grupo8.homebanking.bll.SucursalesEJB");
+            return (SucursalesEJB) c.lookup("java:global/HomeBanking-ear/HomeBanking-ejb-1.0-SNAPSHOT/SucursalesEJB!org.fing.tagsi.grupo8.homebanking.bll.SucursalesEJB");
         } catch (NamingException ne) {
             throw new RuntimeException(ne);
         }
