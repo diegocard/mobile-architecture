@@ -1,4 +1,5 @@
 /* ========================== Manejo de tablas ========================== */
+var BDCargada = false;
 
 //Ejecuta las transacciones pendientes y devuelve la base
 function obtenerBD(){
@@ -7,9 +8,12 @@ function obtenerBD(){
 
 // Invoca la creacion de las tablas de la base de datos en caso de que no existan
 function cargarBDInicial() {
-	obtenerBD().transaction(eliminarTablas, errorBD);	
-	obtenerBD().transaction(iniciarTablaUsuario, errorBD);
-	guardarUsuarioPersistente('asd','das');
+	if (!BDCargada){
+		//obtenerBD().transaction(eliminarTablas, errorBD);	
+		obtenerBD().transaction(iniciarTablaUsuario, errorBD);
+		//guardarUsuarioPersistente('asd','das');
+		BDCargada = true;
+	}
 }
 
 // Elimina todas las tablas de la base
@@ -71,7 +75,7 @@ function cargarUsuarioPersistente(){
 	);
 }
 
-function guardarUsuarioPersistente(Usuario, Password, IsAdmin){
+function guardarUsuarioPersistente(User, Pass, IsAdm){
 	//Solo puede haber 1 usuario persistente
 	//En caso de que haya alguno guardado, lo elimino
 	var queryDelete = 'DELETE FROM USUARIO';
@@ -82,10 +86,9 @@ function guardarUsuarioPersistente(Usuario, Password, IsAdmin){
 		},
 		errorBD
 	);
-	alert('elimina los anteriores');
 	//Guardo el nuevo usuario persistente
 	var queryInsert = 'INSERT INTO Usuario (Usuario, Password, IsAdmin) ' +
-				'VALUES ("' + Usuario + '", "' + Password + '", "' + IsAdmin + '")';
+				'VALUES ("' + User + '", "' + Pass + '", "' + IsAdm + '")';
 	var db = obtenerBD();
 	db.transaction(
 		function(tx){
