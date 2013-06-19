@@ -12,7 +12,7 @@ HTML5 based mobile application example, exploring different architectures, techn
 - Glassfish Web Server
 - Netbeans HTML5 projects.
 
-The applications include:
+The re[p includes:
 
 1. HomeBanking
   - HTML5 application that represents the administrative interface for a banking business. 
