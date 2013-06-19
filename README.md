@@ -1,4 +1,5 @@
-Mobile HTML5 based architecture - State of the art
+Mobile HTML5 based architecture
+State of the art
 ==================
 
 HTML5 based mobile application example, exploring different architectures, technologies and solutions used for Mobile development.
