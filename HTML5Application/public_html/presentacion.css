@@ -1,12 +1,36 @@
 .text-align-center {
   text-align: center;
 }
+
 .text-align-right {
   text-align: right;
 }
 
-#tbl-detalle-cuenta{
-	border: 2px solid black;
+td.label{
+	text-align: right;
+}
+
+/* Detalle de cuenta */
+#page-detalle-cuenta h2{
+	text-align: center;
+}
+
+#page-detalle-cuenta #tbl-detalle-cuenta{
+	border: 1px solid #ccc;
+	width: 100%;
+	background: linear-gradient( #6facd5 /*{b-bar-background-start}*/, #497bae);
+	color: white;
+	text-shadow: 0 1px 0 #000;
+	border-radius: 10px;
+	font-size: 21px;
+	padding: 10px;
+}
+
+#page-detalle-cuenta #txtCuentaNumero, 
+#page-detalle-cuenta #txtCuentaTipo, 
+#page-detalle-cuenta #txtCuentaMonto{
+	width: 50%;
+	padding-left: 10px;
 }
 
 /** CSS for non-standard jQuery Mobile styles or Codiqa components **/
