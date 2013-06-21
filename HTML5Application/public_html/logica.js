@@ -6,24 +6,31 @@ var Password = null;
 var IsAdmin = false;
 var UsuarioLogueado = false; //vale false hasta que el usuario se loguea
 var Cuentas = null; //Cuentas del usuario
+var EventosIniciados = false;
 
 /* ============================== Inicio de la aplicacion ============================== */
-
 $(document).bind('pageinit', eventosInicio);
 
 function eventosInicio(){
-    //Eventos de usuario
-	$('#btn-login').bind('tap', btnLogin);
-    $('#btn-transferencia').bind('tap', btnTransferencia);
-    //Eventos al cargar la pagina de iniciobtnTransferencia
-    $(document).on('pagebeforecreate', '#page-inicio', eventosPageInicio);
-    //Eventos al cargar la pagina de inicio
-    $(document).on('pagebeforecreate', '#page-sucursales', eventosPageSucursales);
-    //Invocamos a la persistencia para cargar los datos iniciales de la aplicacion    
-    cargarBDInicial();
-    //En caso de que exista un usuario persistente, realizo login con ese usuario    
-    if (!UsuarioLogueado){
-        loginPersistente();
+    if (!EventosIniciados){        
+        //Eventos de usuario
+    	$('#btn-login').bind('tap', btnLogin);
+        $('#btn-transferencia').bind('tap', btnTransferencia);
+        //Eventos al cargar la pagina de iniciobtnTransferencia
+        $(document).on('pagebeforecreate', '#page-inicio', eventosPageInicio);
+        //Eventos al cargar la pagina de inicio
+        $(document).delegate('#page-sucursales', 'pageshow', eventosPageSucursales);
+        //Eventos al cargar la pagina de historial
+        $(document).delegate('#page-historial', 'pageshow', eventosPageHistorial);
+        //Boton de logout
+        $('.btnLogout').bind('tap', btnLogout);
+        //Invocamos a la persistencia para cargar los datos iniciales de la aplicacion    
+        cargarBDInicial();
+        //En caso de que exista un usuario persistente, realizo login con ese usuario    
+        if (!UsuarioLogueado){
+            loginPersistente();
+        }
+        EventosIniciados = true;
     }
     
 }
@@ -155,8 +162,75 @@ function cargarSucursalesSuccess(data){
 }
 
 function btnTransferencia(){
+    var CuentaDesdeId = $('#selectTransferenciaDesde').find(":selected").val();
+    var CuentaHastaId = $('#selectTransferenciaHasta').find(":selected").val();
     var CuentaDesde = $('#selectTransferenciaDesde').find(":selected").text();
-    alert(CuentaDesde);
-    redirectToPage('#page-inicio');
+    var CuentaHasta = $('#selectTransferenciaHasta').find(":selected").text();
+    var Monto = $('#txtTransferenciaMonto').val();
+    if (Monto == ''){
+        alert('Ingrese un monto válido para la transferencia');
+    }else if (CuentaDesde == CuentaHasta){
+        alert('Seleccione una cuenta destino distinta de la de origen');
+    }else{
+        //Realizar transferencia
+        realizarTransferencia(CuentaDesdeId, CuentaDesde, CuentaHastaId, CuentaHasta, Monto);
+    }
+}
+
+function realizarTransferencia(CuentaDesdeId, CuentaDesde, CuentaHastaId, CuentaHasta, Monto){
+    if (IdUsuario != null){
+        var url=URLBase + 'transferencias/jsonp/realizarTransferencia'+
+            '/' + IdUsuario +
+            '/' + CuentaDesdeId +
+            '/' + IdUsuario +
+            '/' + CuentaHastaId +
+            '/' + Monto +
+            '/' + 'Transferencia de ' + CuentaDesde + ' a ' + CuentaHasta;
+ 
+        //Realizo el envio
+        $.ajax({
+            url: url,            
+            dataType: 'jsonp',
+            jsonpCallback: 'transferenciaSuccess',
+            jsonp: 'callback',
+        });
+    }
+}
+
+function transferenciaSuccess(data){
+    //Guardo la transferencia en el historial
+    guardarTransferenciaHistorial(IdUsuario, data.cuentaOrigen.tipo, data.cuentaDestino.tipo, data.monto, Date.today());
+    //Mostrar dialogo de confirmacion
+    $("#lnkDialog").click();
+}
+
+function eventosPageHistorial(){
+    //Invoca a la persistencia
+    cargarHistorial();
+}
+
+function cargarEntradasHistorial(entradas){
+    $('#body-historial').html('');
+    for (var i=0; i<entradas.length; i++){
+        $('#body-historial').append(
+            '<tr>' +
+                '<td>' + entradas.item(i).CuentaDesde + '</td>' +
+                '<td>' + entradas.item(i).CuentaHasta + '</td>' +
+                '<td>' + entradas.item(i).Monto + '</td>' +
+                '<td>' + entradas.item(i).FechaHora + '</td>' +
+            '</tr>'
+        );
+    }
+}
+
+function btnLogout(){
+    IdUsuario =  null;
+    NomUsuario =  null;
+    Password = null;
+    IsAdmin = false;
+    UsuarioLogueado = false;
+    Cuentas = null;
+    EventosIniciados = false;
+    eliminarUsuarioPersistente();
 }
 

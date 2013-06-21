@@ -14,6 +14,7 @@ function cargarBDInicial() {
 			obtenerBD().transaction(eliminarTablas, errorBD);
 		}
 		obtenerBD().transaction(iniciarTablaUsuario, errorBD);
+		obtenerBD().transaction(iniciarTablaHistorial, errorBD);
 		//guardarUsuarioPersistente('asd','das');
 		BDCargada = true;
 	}
@@ -21,8 +22,6 @@ function cargarBDInicial() {
 
 // Elimina todas las tablas de la base
 function eliminarTablas(tx){
-	tx.executeSql('DROP TABLE IF EXISTS Cuenta');
-	tx.executeSql('DROP TABLE IF EXISTS Transferencia');
 	tx.executeSql('DROP TABLE IF EXISTS Usuario');
 	tx.executeSql('DROP TABLE IF EXISTS Historial');
 }
@@ -32,24 +31,14 @@ function errorBD(err) {
 	alert("Error " + err.code + " procesando SQL: " + err.message);
 }
 
-// Crea la tabla de cuentas en caso de que no exista 
-function iniciarTablaCuenta(tx) {
-	tx.executeSql('CREATE TABLE IF NOT EXISTS Cuenta (ID unique, Numero, Saldo, Tipo, Usuario_ID)');	
-}
-
-// Crea la tabla de transferencias en caso de que no exista 
-function iniciarTablaTransferencia(tx) {
-	tx.executeSql('CREATE TABLE IF NOT EXISTS Transferencia (ID unique, Descripcion, Monto, Cuenta_Destino_ID, Cuenta_Origen_ID)');	
-}
-
 // Crea la tabla que guarda los datos del usuario (unico)
 function iniciarTablaUsuario(tx) {
 	tx.executeSql('CREATE TABLE IF NOT EXISTS Usuario (ID unique, Nombre, Password, IsAdmin)');	
 }
 
 // Crea la tabla que guarda los datos del historial
-function iniciarTablaUsuario(tx) {
-	tx.executeSql('CREATE TABLE IF NOT EXISTS Historial (IDUsuario, Mensaje)');	
+function iniciarTablaHistorial(tx) {
+	tx.executeSql('CREATE TABLE IF NOT EXISTS Historial (IDUsuario, CuentaDesde, CuentaHasta, Monto, FechaHora)');
 }
 
 /* ========================== Manejo de datos ========================== */
@@ -79,17 +68,31 @@ function cargarUsuarioPersistente(){
 	);
 }
 
-function guardarUsuarioPersistente(ID, Name, Pass, IsAdm){
-	//Solo puede haber 1 usuario persistente
-	//En caso de que haya alguno guardado, lo elimino
-	var queryDelete = 'DELETE FROM USUARIO';
+function cargarHistorial(){
 	var db = obtenerBD();
+	var query = "SELECT * FROM Historial WHERE IDUsuario='" + IdUsuario + "'";
 	db.transaction(
 		function(tx){
-			tx.executeSql(queryDelete);
+			tx.executeSql(
+				query, 
+				[], 
+				function (tx, resultado){
+					var CantFilas = resultado.rows.length;					
+					if (CantFilas > 0){
+						cargarEntradasHistorial(resultado.rows);
+					}					
+				}, 
+				errorBD
+			);
 		},
 		errorBD
 	);
+}
+
+function guardarUsuarioPersistente(ID, Name, Pass, IsAdm){
+	//Solo puede haber 1 usuario persistente
+	//En caso de que haya alguno guardado, lo elimino
+	eliminarUsuarioPersistente();
 	//Guardo el nuevo usuario persistente
 	var queryInsert = 'INSERT INTO Usuario (ID, Nombre, Password, IsAdmin) ' +
 				'VALUES ("' + ID + '", "' + Name + '", "' + Pass + '", "' + IsAdm + '")';
@@ -102,3 +105,26 @@ function guardarUsuarioPersistente(ID, Name, Pass, IsAdm){
 	);
 }
 
+function eliminarUsuarioPersistente(){
+	var queryDelete = 'DELETE FROM USUARIO';
+	var db = obtenerBD();
+	db.transaction(
+		function(tx){
+			tx.executeSql(queryDelete);
+		},
+		errorBD
+	);
+}
+
+function guardarTransferenciaHistorial(IdUsuario, CuentaDesde, CuentaHasta, Monto, FechaHora){
+	//Guardo la transferencia en el historial
+	var queryInsert = 'INSERT INTO Historial (IDUsuario, CuentaDesde, CuentaHasta, Monto, FechaHora) ' +
+				'VALUES ("' + IdUsuario + '", "' + CuentaDesde + '", "' + CuentaHasta + '", "' + Monto + '", "' + FechaHora + '")';
+	var db = obtenerBD();
+	db.transaction(
+		function(tx){
+			tx.executeSql(queryInsert);
+		},
+		errorBD
+	);
+}
