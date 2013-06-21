@@ -199,7 +199,7 @@ function realizarTransferencia(CuentaDesdeId, CuentaDesde, CuentaHastaId, Cuenta
 
 function transferenciaSuccess(data){
     //Guardo la transferencia en el historial
-    guardarTransferenciaHistorial(IdUsuario, data.cuentaOrigen.tipo, data.cuentaDestino.tipo, data.monto, Date.today());
+    guardarTransferenciaHistorial(IdUsuario, data.cuentaOrigen.tipo, data.cuentaDestino.tipo, data.monto, new Date().toString("dd/MM/yyyy HH:mm:ss"));
     //Mostrar dialogo de confirmacion
     $("#lnkDialog").click();
 }

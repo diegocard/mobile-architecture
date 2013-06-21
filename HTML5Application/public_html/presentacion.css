@@ -18,7 +18,7 @@ td.label{
 #page-detalle-cuenta #tbl-detalle-cuenta{
 	border: 1px solid #ccc;
 	width: 100%;
-	background: linear-gradient( #6facd5 /*{b-bar-background-start}*/, #497bae);
+	background: rgb(88, 143, 190);
 	color: white;
 	text-shadow: 0 1px 0 #000;
 	border-radius: 10px;
@@ -66,7 +66,7 @@ table.historial tr:last-child td {
 table.historial thead{
 	color: white;
 	text-shadow: 0 1px 0 #000;
-    background: linear-gradient( #6facd5 /*{b-bar-background-start}*/, #497bae /*{b-bar-background-end}*/)
+    background: rgb(88, 143, 190);
 }
 
 
