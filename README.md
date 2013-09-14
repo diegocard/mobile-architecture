@@ -1,4 +1,4 @@
-Mobile HTML5-based architecture example
+Mobile HTML5 architecture example
 ==================
 
 HTML5 based mobile application example, exploring different architectures, technologies and solutions used for Mobile development.
